@@ -41,7 +41,7 @@ case "$status" in
     echo "Database '$database' already exists."
     ;;
   404)
-    curl -fsS --user "$auth" -X PUT "$database_url" >/dev/null
+    curl -fsS --user "$auth" -X PUT "$database_url?n=1" >/dev/null
     echo "Created database '$database'."
     ;;
   *)
