@@ -1,0 +1,7 @@
+.env
+backups/
+*.tar.gz
+.DS_Store
+# Local maintainer notes; do not publish
+/docs/community-review.md
+/docs/decisions/
