@@ -61,6 +61,8 @@ services:
     image: caddy:2.11.9-alpine
     profiles: [coolify]
     restart: unless-stopped
+    expose:
+      - "80"
     volumes:
       - ./Caddyfile.coolify:/etc/caddy/Caddyfile:ro
     depends_on:
