@@ -6,8 +6,8 @@ services:
     container_name: livesync-couchdb
     restart: unless-stopped
     environment:
-      COUCHDB_USER: ${COUCHDB_USER:?Copy .env.example to .env and set COUCHDB_USER}
-      COUCHDB_PASSWORD: ${COUCHDB_PASSWORD:?Set COUCHDB_PASSWORD in .env}
+      COUCHDB_USER: ${COUCHDB_USER:?Set COUCHDB_USER in .env or Coolify Environment Variables}
+      COUCHDB_PASSWORD: ${COUCHDB_PASSWORD:?Set COUCHDB_PASSWORD in .env or Coolify Environment Variables}
     volumes:
       - couchdb-data:/opt/couchdb/data
       # The image entrypoint chmods configuration files; keep this bind mount writable.
@@ -33,8 +33,8 @@ services:
         condition: service_healthy
     environment:
       COUCHDB_URL: http://couchdb:5984
-      COUCHDB_USER: ${COUCHDB_USER:?Set COUCHDB_USER in .env}
-      COUCHDB_PASSWORD: ${COUCHDB_PASSWORD:?Set COUCHDB_PASSWORD in .env}
+      COUCHDB_USER: ${COUCHDB_USER:?Set COUCHDB_USER in .env or Coolify Environment Variables}
+      COUCHDB_PASSWORD: ${COUCHDB_PASSWORD:?Set COUCHDB_PASSWORD in .env or Coolify Environment Variables}
       COUCHDB_DATABASE: ${COUCHDB_DATABASE:-obsidiannotes}
     volumes:
       - ./scripts/init-couchdb.sh:/usr/local/bin/init-couchdb.sh:ro
@@ -53,6 +53,16 @@ services:
       - ./Caddyfile:/etc/caddy/Caddyfile:ro
       - caddy-data:/data
       - caddy-config:/config
+    depends_on:
+      couchdb:
+        condition: service_healthy
+
+  coolify-gateway:
+    image: caddy:2.11.9-alpine
+    profiles: [coolify]
+    restart: unless-stopped
+    volumes:
+      - ./Caddyfile.coolify:/etc/caddy/Caddyfile:ro
     depends_on:
       couchdb:
         condition: service_healthy

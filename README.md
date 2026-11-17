@@ -56,7 +56,8 @@ CouchDB привязана к localhost и напрямую недоступна
 
 ## Состав репозитория
 
-- `docker-compose.yml` — сервисы CouchDB и опциональный Caddy.
+- `docker-compose.yml` — CouchDB и опциональные gateway-сервисы для Caddy или Coolify.
+- `Caddyfile` и `Caddyfile.coolify` — конфигурации HTTPS для standalone Caddy и внутреннего Coolify gateway.
 - `couchdb/livesync.ini` — single-node режим, CORS и лимиты запросов.
 - `scripts/` — инициализация базы, backup и staged restore.
 - `.env.example` — шаблон настроек; скопируйте его в `.env`, который исключён из Git.
